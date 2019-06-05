@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+    <title>led</title>
+    <style media="screen">
+body{
+  text-align: center;
+}
+    </style>
+
+<script type="text/javascript">
+ var req = null ;
+ function ver(){
+   var code = document.getElementById('led').alt;
+   if(window.XMLHttpRequest){
+     req = new XMLHttpRequest();
+   }else{
+     req = new ActiveXObject("Microsoft.XMLHTTP");
+   }
+   req.onreadystatechange = myAct;
+   req.open("GET" , "led.bin?code="+code,false);
+   req.send();
+ }
+
+ function myAct(){
+if(req.readyState == 4){
+   var element = document.getElementById('led');
+   alt = document.getElementById('led').alt;
+   if(alt == "0"){ //当前名称
+   element.src = "images/open.png" ; //要显示的图片
+   element.alt ="2";
+   }
+   if(alt=="2"){
+     element.src = "images/half.png";
+     element.alt = "1";
+   }
+   if(alt=="1"){
+     element.src = "images/close.png";
+     element.alt = "0";
+   }
+ }
+ }
+
+
+
+function getNowDate(){
+var mydate = new Date();
+var year =mydate.getFullYear();
+var month =mydate.getMonth()+1;
+var date = mydate.getDate();
+var hours = mydate.getHours();
+var minutes = mydate.getMinutes();
+var seconds = mydate.getSeconds();
+if(month < 10){
+  month += "0";
+}
+if(hours <10){
+  hours += "0";
+}
+
+if(minutes <10){
+  minutes += "0";
+}
+if(seconds <10){
+  seconds += "0";
+}
+
+var newDate = year +"年" +month +"月" +date +"日" +" "+hours+":"+minutes+":"+seconds ;
+document.getElementById("date").innerHTML = " 当前时间: " + newDate ;
+setTimeout("getNowDate()",1000);
+}
+</script>
+
+  </head>
+  <body onload ="getNowDate()">
+    <div class="">
+        <img src="images/close.png" alt="0" id ="led" name="code"  onclick="ver();">
+    </div>
+
+    <div class=""  id="date">
+
+    </div>
+
+  </body>
+</html>
